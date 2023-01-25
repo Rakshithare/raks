@@ -1,0 +1,21 @@
+from sklearn.datasets import load_breast_cancer
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import r2_score
+cancer=load_breast_cancer()
+import sklearn.metrics as metrics
+from sklearn.metrics import confusion_matrix
+x=cancer["data"]
+y=cancer["target"]
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
+import seaborn as sns
+
+model=RandomForestClassifier(n_estimators=100)
+
+cm=metrics.confusion_matrix(predictions,y_test)
+sns.heatmap(cm,annot=True)
+
+model.fit(x_train,y_train)
+predictions=model.predict(x_test)
+accuracy=model.score(x_test,y_test)
+print("R-square accuracy",accuracy)
